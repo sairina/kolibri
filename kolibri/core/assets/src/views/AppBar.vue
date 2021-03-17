@@ -89,7 +89,7 @@
               <CoreMenuOption
                 :label="$tr('languageSwitchMenuOption')"
                 icon="language"
-                style="cursor: pointer;"
+                :style="{ cursor: 'pointer', 'white-space': 'nowrap' }"
                 @select="handleChangeLanguage"
               />
               <LogoutSideNavEntry v-if="isUserLoggedIn" />
