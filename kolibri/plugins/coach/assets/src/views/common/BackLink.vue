@@ -2,7 +2,11 @@
 
   <!-- TODO: move this to be a core KBackLink -->
   <span v-show="!$isPrint" class="offset">
-    <KRouterLink :to="to" icon="back" :text="text" />
+    <KRouterLink
+      :to="to"
+      icon="back"
+      :text="text"
+    />
   </span>
 
 </template>

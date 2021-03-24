@@ -99,6 +99,7 @@
 
   .core-menu-option {
     display: block;
+    width: 100%;
     padding: 8px;
     margin: 4px 8px;
     font-size: 16px;
