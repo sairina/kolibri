@@ -91,7 +91,6 @@
 
 <script>
 
-  import { mapGetters } from 'vuex';
   import PDFJSLib from 'pdfjs-dist';
   import Hammer from 'hammerjs';
   import throttle from 'lodash/throttle';
@@ -142,7 +141,6 @@
       showControls: true,
     }),
     computed: {
-      ...mapGetters(['summaryTimeSpent']),
       // Returns whether or not the current device is iOS.
       // Probably not perfect, but worked in testing.
       iOS() {
@@ -174,6 +172,14 @@
       fullscreenText() {
         return this.isInFullscreen ? this.$tr('exitFullscreen') : this.$tr('enterFullscreen');
       },
+      /* eslint-disable kolibri/vue-no-unused-properties */
+      /**
+       * @public
+       */
+      defaultDuration() {
+        return this.duration || this.targetTime;
+      },
+      /* eslint-enable kolibri/vue-no-unused-properties */
     },
     watch: {
       recycleListIsMounted(newVal) {
@@ -366,7 +372,7 @@
         this.$refs.recycleList.updateVisibleItems(false);
       },
       updateProgress() {
-        this.$emit('updateProgress', this.summaryTimeSpent / this.targetTime);
+        this.$emit('updateProgress', this.durationBasedProgress);
       },
       updateContentState() {
         let contentState;

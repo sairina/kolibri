@@ -35,7 +35,6 @@
 
 <script>
 
-  import { mapGetters } from 'vuex';
   import { now } from 'kolibri.utils.serverClock';
   import UiIconButton from 'kolibri-design-system/lib/keen/UiIconButton';
   import CoreFullscreen from 'kolibri.coreVue.components.CoreFullscreen';
@@ -54,13 +53,20 @@
       };
     },
     computed: {
-      ...mapGetters(['summaryTimeSpent']),
       name() {
         return nameSpace;
       },
       rooturl() {
         return this.defaultFile.storage_url;
       },
+      /* eslint-disable kolibri/vue-no-unused-properties */
+      /**
+       * @public
+       */
+      defaultDuration() {
+        return !this.duration ? this.timeSpent * 1000 : this.duration;
+      },
+      /* eslint-enable kolibri/vue-no-unused-properties */
     },
     mounted() {
       this.hashi = new Hashi({ iframe: this.$refs.iframe, now });
@@ -79,7 +85,7 @@
     },
     methods: {
       recordProgress() {
-        const totalTime = this.summaryTimeSpent * 1000;
+        const totalTime = this.timeSpent * 1000;
         this.$emit('updateProgress', Math.max(0, totalTime / 300000));
         this.pollProgress();
       },

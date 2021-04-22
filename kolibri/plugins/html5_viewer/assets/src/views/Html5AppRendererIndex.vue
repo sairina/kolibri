@@ -48,7 +48,6 @@
 
 <script>
 
-  import { mapGetters } from 'vuex';
   import { now } from 'kolibri.utils.serverClock';
   import CoreFullscreen from 'kolibri.coreVue.components.CoreFullscreen';
   import Hashi from 'hashi';
@@ -74,7 +73,6 @@
       };
     },
     computed: {
-      ...mapGetters(['summaryTimeSpent']),
       name() {
         return nameSpace;
       },
@@ -119,6 +117,15 @@
         }
         return { height: this.iframeHeight };
       },
+      /* eslint-disable kolibri/vue-no-unused-properties */
+      /**
+       * @public
+       */
+      defaultDuration() {
+        const totalTime = this.timeSpent * 1000;
+        return !this.duration ? totalTime : this.duration;
+      },
+      /* eslint-enable kolibri/vue-no-unused-properties */
     },
     watch: {
       userData(newValue) {
@@ -147,7 +154,7 @@
     },
     methods: {
       recordProgress() {
-        const totalTime = this.summaryTimeSpent * 1000;
+        const totalTime = this.timeSpent * 1000;
         const hashiProgress = this.hashi ? this.hashi.getProgress() : null;
         this.$emit(
           'updateProgress',

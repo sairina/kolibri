@@ -151,7 +151,6 @@
   import clamp from 'lodash/clamp';
   import Lockr from 'lockr';
   import FocusLock from 'vue-focus-lock';
-  import { mapGetters } from 'vuex';
   import CoreFullscreen from 'kolibri.coreVue.components.CoreFullscreen';
   import responsiveElementMixin from 'kolibri.coreVue.mixins.responsiveElementMixin';
   import responsiveWindowMixin from 'kolibri.coreVue.mixins.responsiveWindowMixin';
@@ -226,7 +225,6 @@
       };
     },
     computed: {
-      ...mapGetters(['summaryTimeSpent']),
       isAtStart() {
         return get(this.rendition, 'location.atStart', false);
       },
@@ -333,6 +331,14 @@
         const seconds = (numberOfWords * 60) / WORDS_PER_MINUTE;
         return seconds;
       },
+      /* eslint-disable kolibri/vue-no-unused-properties */
+      /**
+       * @public
+       */
+      defaultDuration() {
+        return !this.duration ? this.expectedTimeToRead : this.duration;
+      },
+      /* eslint-enable kolibri/vue-no-unused-properties */
     },
     watch: {
       sideBarOpen(newSideBar, oldSideBar) {
@@ -463,7 +469,7 @@
     methods: {
       updateProgress() {
         if (this.locations.length > 0) {
-          this.$emit('updateProgress', this.summaryTimeSpent / this.expectedTimeToRead);
+          this.$emit('updateProgress', this.durationBasedProgress);
         }
       },
       handleReadyRendition() {
